@@ -21,7 +21,7 @@
 ## **Qlik View**
 #### **Script editor**
 + Variables:
-```qvs
+```QVS
 SET ThousandSep='.';
 SET DecimalSep=',';
 SET MoneyThousandSep='.';
