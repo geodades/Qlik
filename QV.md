@@ -366,8 +366,9 @@ Aquesta qualificadors cal utilitzar-los en una funció d'agregació.
     |NomEstat|Es poden utilitzar estats alternatius|  
   - Exemples:   
     _Taula de dades exemple:_  
-    <img src=img/dadesexemple.PNG>   
-
+    <img src=img/dadesExemple.PNG>    
+     
+    _Resultat:_  
     <img src=img/identificadors.PNG>
 
 
