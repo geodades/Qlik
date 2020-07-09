@@ -234,7 +234,7 @@ Resident FrangesHoraries;
 ```
 Resultat:  
 <img src=img/intervalMatch.PNG>
-[Contribution guidelines for this project](img/intervalMatch.PNG)
+![Contribution guidelines for this project](img/intervalMatch.PNG)
 
 + Busca valors en altres camps `LOOKUP`  
   `lookup('nomCampRecuperar', 'nomCampOnBuscar', valorABuscar, 'nomTaulaonBuscar')`  
