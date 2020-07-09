@@ -11,7 +11,7 @@
 		- [Expresions](#expresions)
 			- [Funcions agregació](#funcions-agregació)
 		- [Qualificadors TOTAL i ALL](#qualificadors-total-i-all)
-	- [Conjunts de selecció - Set analysis](#conjunts-de-selecci-set-analysis)
+	- [Conjunts de selecció - Set analysis](#conjunts-de-selecció-set-analysis)
 	- [Seguretat](#seguretat)
 - [Pàgines amb informació Qlik View](#pàgines-amb-informació-qlik-view)
 - [Qlik Sense](#qlik-sense)
