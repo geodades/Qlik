@@ -343,7 +343,7 @@ Aquesta qualificadors cal utilitzar-los en una funció d'agregació.
   <img src=img/alltotal.PNG>
 
 
-#### Conjunts de selecció - Set analysis
+#### Conjunts de selecció. Set analysis
 - Només es pot fer servir amb funcions d'agregació
 - Consta de Identificadors, Operadors i Modificadors:
   - **Identificadors:** defineixen àmbit del conjunt de selecció
@@ -351,7 +351,7 @@ Aquesta qualificadors cal utilitzar-los en una funció d'agregació.
   - **Operadors:** permeten interaccions (operacions) entre els conjunts    
 
 
-    <img src=img/setAnalysis.PNG>
+  <img src=img/setAnalysis.PNG>
 
 
 
