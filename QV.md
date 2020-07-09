@@ -233,7 +233,7 @@ LOAD hora_inici, hora_final
 Resident FrangesHoraries;
 ```
 Resultat:  
-![intervalMatch](img\intervalMatch.png)
+<img src=img/intervalMatch.png>
 
 + Busca valors en altres camps `LOOKUP`  
   `lookup('nomCampRecuperar', 'nomCampOnBuscar', valorABuscar, 'nomTaulaonBuscar')`  
