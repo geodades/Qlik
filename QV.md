@@ -2,14 +2,16 @@
 
 - [Qlik View](#qlik-view)
 	- [Script editor](#script-editor)
-		- [Càrrega de dades](#càrrega-de-dades)
+		- [Càrrega de dades](#càrrega-de-dades)  
+    - [Càrrega de dades amb iteracions i subrutines](#càrrega-de-dades-amb-iteracions-i-subrutines)
 		- [Funcions per modificar camps](#funcions-per-modificar-camps)
 		- [Variables](#variables)
+    - [Data i hora](#data-i-hora)
 		- [Calendari](#calendari)
 		- [Guardar fitxers QVD](#guardar-fitxers-qvd)
 	- [Gràfics i visualització](#gràfics-i-visualització)
 		- [Expresions](#expresions)
-			- [Funcions agregació](#funcions-agregació)
+		- [Funcions agregació](#funcions-agregació)
 		- [Qualificadors TOTAL i ALL](#qualificadors-total-i-all)
 	- [Conjunts de selecció - Set analysis](#conjunts-de-selecció-set-analysis)
 	- [Seguretat](#seguretat)
@@ -21,7 +23,7 @@
 ## **Qlik View**
 #### **Script editor**
 + Variables:
-```QVS
+```qvs
 SET ThousandSep='.';
 SET DecimalSep=',';
 SET MoneyThousandSep='.';
@@ -269,15 +271,57 @@ Resultat:
   <img src=img/lookup.PNG>
 
 
+##### Càrrega de dades amb iteracions i subrutines
 
-##### Funcions per modificar camps
++ Càrrega de diferents fitxers iteratiu: `Do while ... loop`  
+  ```qvs
+     // carrega fitxers fitxer1.csv, fitxer2.csv...
+     Set a=1;
+     Do while a<10
+        LOAD * from file$(a).csv;
+        Let a=a+1;
+     Loop
+  ```
++ Càrrega de fitxers amb iteració: `For i=1 to n ... next`
++ Càrrega de dades amb iteració `For each ... next` i subrutina `Sub...end - call`
+   ```QVS
+   sub DoDir (Root)  //funció
+     // busca fitxers QLIK al directori root
+     for each Ext in 'qvw', 'qva', 'qvo', 'qvs', 'qvc', 'qvd'
+        for each File in filelist (Root&'\*.' &Ext)
+          LlistaFitxers:
+           LOAD
+             '$(File)' as Name,
+             FileSize( '$(File)' ) as Size,
+             FileTime( '$(File)' ) as FileTime
+           autogenerate 1;
+        next File
+     next Ext
+
+     //busca en subdirectoris
+     for each Dir in dirlist (Root&'\*' )
+        call DoDir (Dir)
+     next Dir
+
+   end sub
+
+   LlistatFitxers:
+      call DoDir ('C:')
+   ```
+
++ Funció `if ...then ... elseif ... else ... end if`
++ Funció `switch...case...default...end switch`
+
+
+##### Funcions
 
  - **if(condition, then, else)**  - `if(edat < 18, 'menor', if(edat > 65, 'major', 'adult')) as nivell_edat`
  - **autonumber()** crea un id numèric a partir de l'expressió. L'expressió poden ser camps, si els camps es repeteixen el autonumber serà el mateix. Per evitar això fer servir AutoID.
  `Autonumber(Year&CustomerID) as CustomID`
  - **peek()** recupera el valor d'un camp d'un registre concret: `PEEK(camp, <numfila>, <nomtaula>)` per defecte recupera l'últim valor carregat pel camp indicat (numfila=-1). 0=primer registre, 1= segon registre.
  - **RowNo() i RecNo()** - retorna identificadors correlatius inici al 1. RecNo retorna el id inicialment carregat, RowNo reinical la numeració.
- - Year(), Month(), Day(), Week(), MonthStart()
+ - **While()**
+
 
 
 ##### Variables
@@ -288,6 +332,43 @@ Resultat:
    SET vRutaFitxer="C:\dades\"
    LOAD *  FROM [$(vRutaFitxer)fitxer.xlsx]
    ```   
+
+##### Data i hora  
++ Qlik no hi ha dades tipus data --> fa servir dades tipus dual: guardar com número  o com text
++ Hi ha funcions **d'interpretació i de format**  
+  + Interpretació (#): de text --> a núm (realment a dual)    
+     + `Date#(), Time#(), Timestamp#(), Interval#(), Num#()`
+     ```QVS
+     Date#( DateField, 'M/D/YY') as Data
+     Month(Date#(mes, 'MMM')) as mes
+     ```
+     <img src="img/interpretacioDates.PNG">  
+
+  + Format: de núm (dual) --> a text amb format
+     + `Date(- ,'DD-MM-YY'), Time(-,'hh:mm:ss'), Timestamp(), Num(- ,'##0,00')`
+     <img src="img/datesFormat.PNG">  
+
+     ```qvs  
+     Date( Date#( DateField, 'YYYYMMDD'), 'M/D/YYYY') as Data // per dates 20180101
+     ```
+     + `Dual()` permet fer servir les dues opcions text per visualitzar i número per ordenar per exemple.
+ + Funció MakeDate() - `MakeDate('1985','11','07') as data`
+ + Arrodonir dates o temps:  timestamp és un camp amb data i hora, si es vol extreure només la data o hora, no es pot formatar ja que el valor numèric encara és data-temps. Cal arrodonir amb `floor` i `frac`. Now() és una funcio que ens dóna el timestamp actual.
+    + *exemples:*  
+    <img src="img/timestamp.PNG">
+ + Amb variables sempre fer servir valor numèric: `Let vToday = Num(Today())` i per fer-la servir utilitzar # : `data <= $(#vToday);` (obliga a fer servir punt decimal)
+
+ + Funcions de data temps: `YearStart(), MonthStart(), WeekStart(), QuarterStart()`
+    <img src="img/yearstartnow.PNG">   
+
+ + Quan en el mateix camp tenim dates que venen en diferent format, fer servir `alt()`
+   ```QVS
+   alt( date#( dat , 'YYYY/MM/DD' ),
+        date#( dat , 'MM/DD/YYYY' ),
+        date#( dat , 'MM/DD/YY' ),
+        'Data no vàlida' ) as dataEntrada;
+   ```
+
 
 ##### Calendari
 + Generar el master calendari auxiliar
@@ -324,12 +405,13 @@ LOAD * FROM [..\data\Customers.qvd] (qvd);
 · 'hola'&'-'&'com va'&chr(10) //concatenar més salt de línia
 . Aggr()
 ```
-###### Funcions agregació
+##### Funcions agregació
 Aquestes funcions agafen **diferents valors d'un camp com entrada i de sortida dónen un únic valor**  --> s'ha de fer agregació per:  **a)** una dimensió, **b)** amb un group by al script o **c)** amb la función `Aggr()`. Crea una taula temporal agregada per després aplicar una funció.
 + Exemple amb aggr `Aggr(NODISTINCT Max(UnitPrice), Customer)`  
 Resultat:  
 <img src=img/aggr.PNG>
-+ Funcions d'agregació  `Sum(), Count(), Min(), Max(), Avg(), Mode(), FirstSortedValue(), Concat(), MaxString()`
++ Funcions d'agregació  
+`Sum(), Count(), Min(), Max(), Avg(), Mode(), FirstSortedValue(), Concat(), MaxString()`
 
 ##### Qualificadors TOTAL i ALL  
 Aquesta qualificadors cal utilitzar-los en una funció d'agregació.
@@ -367,7 +449,7 @@ Aquesta qualificadors cal utilitzar-los en una funció d'agregació.
   - Exemples:   
     _Taula de dades exemple:_  
     <img src=img/dadesExemple.PNG>    
-     
+
     _Resultat:_  
     <img src=img/identificadors.PNG>
 
