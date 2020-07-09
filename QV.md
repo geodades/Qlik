@@ -389,10 +389,10 @@ Els modificadors permeten modificar el conjunt. Van entre `< >` El forman un o m
   |expressió|doble cometes " "|`<Any = {">=2011"}>`|
 
   + Exemples:
-    <img src=img/exemplesetanalysis.PNG>   
+    <img src=img/exempleSetAnalysis.PNG>   
 
-  + Exemples2:
-   |Expressió        |Descripció|
+  + Exemples2:  
+   |Expressió|Descripció|
    |---|---|
    |`Sum({<Year={'2006'}, Product = >}Sales)` |Ignora les seleccions del camp producte|
    |`Sum({<Category = {'C*'} >} Sales)`|Categories que comencen per C|
