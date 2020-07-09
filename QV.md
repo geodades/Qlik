@@ -1,19 +1,11 @@
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
-
 - [**Qlik**](#qlik)
-
 	- [**Qlik View**](#qlik-view)
-	
-			- [**Script editor**](#script-editor)
-			
+			- [**Script editor**](#script-editor)	
 				- [Càrrega de dades](#crrega-de-dades)
-				
 				- [Funcions per modificar camps](#funcions-per-modificar-camps)
-				
-				- [Variables](#variables)
-				
+				- [Variables](#variables)  				
 				- [Calendari](#calendari)
-				
 				- [Guardar fitxers QVD](#guardar-fitxers-qvd)
 			- [**Gràfics i visualització**](#grfics-i-visualitzaci)
 				- [Expresions](#expresions)
