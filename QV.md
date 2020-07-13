@@ -474,7 +474,8 @@ Els modificadors permeten modificar el conjunt. Van entre `< >` El forman un o m
   + Exemples:
     <img src=img/exempleSetAnalysis.PNG>   
 
-  + Exemples2:  
+  + Exemples2:    
+  
    |Expressió|Descripció|
    |---|---|
    |`Sum({<Year={'2006'}, Product = >}Sales)` |Ignora les seleccions del camp producte|
