@@ -196,6 +196,7 @@ FROM
 Genera la taula:
 |ProductID|EmployeeID|CustomerID|Year|SalesTarget|    
 
+
 + Agregacions - `LOAD DISTINCT` - carrega els registres diferents --> permet agrupar
  ```qvs
  LOAD DISTINCT
@@ -319,7 +320,7 @@ Resultat:
  - **autonumber()** crea un id numèric a partir de l'expressió. L'expressió poden ser camps, si els camps es repeteixen el autonumber serà el mateix. Per evitar això fer servir AutoID.
  `Autonumber(Year&CustomerID) as CustomID`
  - **peek()** recupera el valor d'un camp d'un registre concret: `PEEK(camp, <numfila>, <nomtaula>)` per defecte recupera l'últim valor carregat pel camp indicat (numfila=-1). 0=primer registre, 1= segon registre.
- - **RowNo() i RecNo()** - retorna identificadors correlatius inici al 1. RecNo retorna el id inicialment carregat, RowNo reinical la numeració.
+ - **RowNo() i RecNo()** - retorna identificadors correlatius inici al 1. RecNo retorna el id inicialment carregat, RowNo reinicia la numeració.
  - **While()**
 
 
@@ -474,8 +475,7 @@ Els modificadors permeten modificar el conjunt. Van entre `< >` El forman un o m
   + Exemples:
     <img src=img/exempleSetAnalysis.PNG>   
 
-  + Exemples2:    
-  
+  + Exemples2:  
    |Expressió|Descripció|
    |---|---|
    |`Sum({<Year={'2006'}, Product = >}Sales)` |Ignora les seleccions del camp producte|
